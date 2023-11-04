@@ -1,3 +1,4 @@
+/* parte três --> escrever os testes da classe Conta; entender o que vai precisar ser testado, antes de iniciar a implementação.*/
 const Conta = require('./Conta');
 
 describe("Testes da classe Conta", () => {
@@ -36,5 +37,32 @@ describe("Testes da classe Conta", () => {
     test("Retorna mensagem de erro ao tentar criar conta com dados inválidos.", () => {
         const conta = new Conta();
         expect(() => conta.criarConta("123456", "123", 1000)).toThrow("Dados inválidos para cadastro.");
+    });
+
+    test("Retorna mensagem de sucesso, ao realizar um saque.", () => {
+        const conta = new Conta();
+
+        conta.criarConta("1234", "12345", 1000);
+
+        conta.sacar(100);
+        expect(conta.saldo).toBe(900);
+    });
+
+    test("Retorna mensagem de erro, ao tentar sacar valor negativo.", () => {
+        const conta = new Conta();
+        conta.criarConta("1234", "12345", 1000);
+
+        conta.sacar(-100);
+        expect(() => conta.sacar(-100)).toThrow("Valor inválido para saque!");
+        expect(conta.saldo).toBe(1000);
+    });
+
+    test("Retorna mensagem de erro, ao tentar sacar valor maior que o disponível em conta.", () => {
+        const conta = new Conta();
+        conta.criarConta("1234", "12345", 1000);
+
+        conta.sacar(2000);
+        expect(() => conta.sacar(-100)).toThrow("Saldo insuficiente");
+        expect(conta.saldo).toBe(1000);
     });
 });
