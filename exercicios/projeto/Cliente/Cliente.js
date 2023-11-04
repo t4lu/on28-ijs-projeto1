@@ -1,6 +1,8 @@
 /* parte dois ---> depois de ter os testes escritos / pensar quais cenários eu vou precisar testar, faço a implementação da classe, seus atributos
 e métodos, tendo como referência o diagrama UML do projeto, as regras de negócio, etc.
 */
+const Conta = require("../Conta/Conta");
+
 class Cliente {
     //atributos da minha classe.
     nome;
@@ -30,6 +32,22 @@ class Cliente {
             throw new Error("Erro no cadastro - dados inválidos!")
         }
 
+    }
+
+    get nome() {
+        return this.nome;
+    }
+
+    set nome(newNome) {
+        this.nome = newNome;
+    }
+
+    get cpf() {
+        return this.#cpf
+    }
+
+    set cpf(newCPf) {
+        this.#cpf = newCPf;
     }
 }
 
