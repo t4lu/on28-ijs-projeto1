@@ -1,5 +1,6 @@
 //início do projeto ---> pensar primeiro no que eu vou precisar testar; depois desenvolver a implementação.
 
+const Conta = require('../Conta/Conta');
 const Cliente = require('./Cliente');
 
 describe("Testes da classe Cliente", () => {
@@ -21,7 +22,8 @@ describe("Testes da classe Cliente", () => {
     });
 
     test("Retorne mensagem de erro quando tenta cadastrar cliente sem uma conta ", () => {
-        expect(cliente.registrar("Analu", "5248546859", 5000, "nao conta")).toThrow("Erro no cadastro - dados inválidos!");
+        const cliente = new Cliente();
+        expect(() => cliente.registrar("Analu", "5248546859", 5000, "nao conta")).toThrow("Erro no cadastro - dados inválidos!");
     });
 
 });
