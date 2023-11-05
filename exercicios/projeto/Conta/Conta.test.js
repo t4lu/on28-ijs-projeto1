@@ -65,4 +65,28 @@ describe("Testes da classe Conta", () => {
         expect(() => conta.sacar(-100)).toThrow("Saldo insuficiente");
         expect(conta.saldo).toBe(1000);
     });
+    
+    test("Retorna mensagem de sucesso ao depositar valor em conta.", () => {
+        const conta = new Conta();
+        conta.criarConta("1234", "12345", 1000);
+
+        conta.depositar(100);
+        expect(conta.saldo).toBe(1100);
+    });
+
+    test("Retorna mensagem de erro ao depositar valor negativo em conta.", () => {
+        const conta = new Conta();
+        conta.criarConta("1234", "12345", 1000);
+
+        expect(() => conta.depositar(-100).toThrow("Valor inválido para depósito."));
+        expect(conta.saldo).toBe(1000);
+    });
+
+    test("Retorna mensagem de erro, caso o dado de valor recebido não seja numérico.", () => {
+        const conta = new Conta();
+        conta.criarConta("1234", "12345", 1000);
+
+        expect(() => conta.depositar("100")).toThrow("Valor inválido para depósito.");
+        expect(conta.saldo).toBe(1000);
+    });
 });
