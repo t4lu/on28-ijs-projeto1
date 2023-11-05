@@ -124,14 +124,14 @@ describe("Testes da classe Conta", () => {
         expect(conta.chavesPix.email).toBe("email@email.com");
     });
 
-    test("Deve retornar mensagem de erro ao cadastrar chave pix com e-mail inválido.", () =>{
+    test("Deve retornar mensagem de erro ao cadastrar chave pix com e-mail inválido.", () => {
         const conta = new Conta();
         const operacao = conta.criarChavePix("emailarrobaemailpontocom", "email");
 
         expect(() => operacao).toThrow("Erro: E-mail inválido!");
     });
 
-    test("Deve criar chave pix por telefone -- do tipo string -- com sucesso.", () =>{
+    test("Deve criar chave pix por telefone -- do tipo string -- com sucesso.", () => {
         const conta = new Conta();
         const operacao = conta.criarChavePix("11 1234-5678", "telefone");
 
@@ -144,5 +144,30 @@ describe("Testes da classe Conta", () => {
         const operacao = conta.criarChavePix("11111111", "telefone");
 
         expect(() => operacao).toThrow("Erro: telefone inválido!");
+    });
+
+    /* dados que serão necessários para transferência:
+    - emissor: conta que envia o dinheiro;
+    - receptor: conta que recebe o dinheiro;
+    - agência e conta do receptor;
+    - método vai precisar receber como parâmetros: o valor, agência do receptor, conta do receptor;
+    * valor precisa ser válido (> 0);
+    * saldo suficiente;
+    * dados precisam ser válidos. */
+
+    test("Retorna uma mensagem de sucesso, ao completar uma transferência com valor válido, saldo suficiente e dados da conta receptora válidos.", () => {
+        /* para esse teste, serão necessárias das contas como objetos de Conta. */
+
+        const contaEmissor = new Conta();
+        const contaReceptor = new Conta();
+
+        contaEmissor.criarConta("6895", "54682", 1000);
+        contaReceptor.criarConta("6895", "48732", 200);
+
+        const operacao = contaEmissor.transferir(100, "6895", "48732");
+
+        expect(operacao).toBe("Transferência realizada!");
+        expect(contaEmissor.conta.saldo).toBe(900);
+        expect(contaReceptor.conta.saldo).toBe(300);
     });
 });
