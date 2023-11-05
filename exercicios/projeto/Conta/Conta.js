@@ -4,6 +4,7 @@ class Conta {
     #conta;
     #saldo;
     chavesPix;
+    static listaContas = [];
 
     constructor(agencia, conta, saldo) {
         this.#agencia = agencia;
@@ -14,6 +15,8 @@ class Conta {
             email: undefined,
             telefone: undefined
         };//define e delimita tres possibilidades de chave pix.
+
+   //     Conta.listaContas.push(this) //insere todo o objeto no array estático listaContas.
     }
     get agencia() {
         return this.#agencia;
@@ -65,6 +68,43 @@ class Conta {
             throw new Error("Valor inválido para depósito.");
         }
     }
+
+    transferir(valor, agencia, conta) {
+        /*inicialmente, verificar se a conta é válida. mas, não temos banco de dados nem API. como solução, criar uma
+        lista estática (static) com essas informações.*/
+
+        let contaValida = Conta.listaContas.find(contaReceptora => { //contaValida vai retornar uma conta existente; do contrário, retorna undefined.
+            let numeroDaContaReceptora = contaReceptora.conta;
+            let numeroDaAgenciaReceptora = contaReceptora.agencia;
+
+            return numeroDaContaReceptora === conta && numeroDaAgenciaReceptora === agencia;
+
+            /* versao refatorada desse código:
+            
+            let contaValida = Conta.listaContas.find(contaSelecionada => {
+                return contaSelecionada.conta === conta && contaSelecionada.agencia === agencia;
+            });
+            */
+        });
+
+        if (!contaValida) {
+            throw new Error("Conta não encontrada");
+        }
+
+        if (valor < 0) {
+            throw new Error("Valor inválido para transferência.");
+        }
+        //a conta precisa ter saldo, e não pode ficar negativa depois da transferência.
+        if (this.#saldo - valor > 0) {
+            const saldoAtualizado = this.#saldo - valor;
+            this.setSaldo(saldoAtualizado);
+            //atualizar o saldo da conta receptora:
+            const saldoContaReceptora = contaValida.saldo + valor;
+            contaValida.setSaldo(saldoContaReceptora);
+            return "Transferência realizada!"
+        }
+    }
+
 
     criarChavePix(chavePix, tipo) {
         switch (tipo) {
