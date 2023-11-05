@@ -46,14 +46,23 @@ class Conta {
     sacar(valor) {
         if (valor > 0 && typeof valor === "number") {
             if (this.#saldo - valor > 0) {
-                const saldo = this.#saldo - valor;
-                this.setSaldo(saldo);
+                const saldoAtualizado = this.#saldo - valor;
+                this.setSaldo(saldoAtualizado);
             } else {
                 throw new Error("Saldo insuficiente para saque.");
             }
 
         } else {
             throw new Error("Valor inválido para saque!");
+        }
+    }
+
+    depositar(valor){
+        if(valor > 0 && typeof valor === "number") {
+            const saldoAtualizado = this.#saldo += valor;
+            this.setSaldo(saldoAtualizado);
+        } else {
+            throw new Error("Valor inválido para depósito.");
         }
     }
 }
