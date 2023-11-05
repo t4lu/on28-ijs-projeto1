@@ -21,7 +21,7 @@ class Cliente {
     // }
 
     registrar(nome, cpf, dadosDaConta, renda) {
-        if (conta instanceof Conta) { //regra de negócio: eu só registro o cliente se ele tiver conta! se não, os dados nem serão recebidos.
+        if (dadosDaConta instanceof Conta) { //regra de negócio: eu só registro o cliente se ele tiver conta! se não, os dados nem serão recebidos.
             this.nome = nome;
             this.#cpf = cpf;
             this.#renda = renda;
