@@ -10,18 +10,18 @@ describe("Testes da classe Cliente", () => {
         contaMock = new Conta();
     })
 
-    test("Verificar se uma instância da classe Cliente está sendo criada.", () => {
+    test("Deve verificar se uma instância da classe Cliente está sendo criada.", () => {
 
         expect(clienteMock instanceof Cliente).toBe(true);
     });
 
-    test("Verificar o cadastro de cliente com dados válidos.", () => {
+    test("Deve verificar o cadastro de cliente com dados válidos.", () => {
 
-        expect(clienteMock.registrar("Analu", "5248546859", 5000, contaMock)).toBe("Cliente cadastrado!");
+        expect(clienteMock.registrarCliente("Analu", "5248546859", 5000, contaMock)).toBe("Cliente cadastrado!");
     });
 
-    test("Retornar mensagem de erro quando tentar cadastrar cliente sem uma conta ", () => {
+    test("Deve retornar mensagem de erro quando tentar cadastrar cliente sem uma conta ", () => {
 
-        expect(() => clienteMock.registrar("Analu", "5248546859", 5000, "nao conta")).toThrow("Erro no cadastro - dados inválidos!");
+        expect(() => clienteMock.registrarCliente("Analu", "5248546859", 5000, "nao conta")).toThrow("Erro no cadastro - dados inválidos!");
     });
 });
