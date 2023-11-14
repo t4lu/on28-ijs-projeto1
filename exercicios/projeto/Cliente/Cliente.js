@@ -6,7 +6,7 @@ class Cliente {
     #renda;
     #dadosDaConta;
 
-    registrar(nome, cpf, dadosDaConta, renda) {
+    registrarCliente(nome, cpf, dadosDaConta, renda) {
         if (dadosDaConta instanceof Conta) {
             this.nome = nome;
             this.#cpf = cpf;
